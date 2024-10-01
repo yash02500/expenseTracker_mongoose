@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Update password</title>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+
+  <body>
+    <header>
+    </header>
+
+    <section class="container">
+      <form id="my-form">
+        <h2>Enter new password</h2>
+        <div class="msg"></div>
+        <div>
+          <label for="password"></label>
+          <input type="password" id="npass" placeholder="password" required>
+        </div>
+        
+        <div>
+            <label for="confirm_password"></label>
+            <input type="password" id="cpass" placeholder="confirm password" required>
+          </div>
+        
+        <input class="btn" type="submit" value="Submit" onclick="updatePassword(event)">
+      </form>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/login.js"></script>
+  </body>
+</html> 

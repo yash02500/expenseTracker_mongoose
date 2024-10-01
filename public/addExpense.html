@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Expenses</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+
+<style>
+  .radio{
+    margin-right: 16%;
+  }
+
+  /* Responsive table */
+  .table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #balance{
+    margin-top: 10%;
+  }
+
+  /* Responsive typography */
+  @media (max-width: 768px) {
+    h2 {
+      font-size: 1.5rem; /* Smaller font size on tablets and below */
+    }
+  }
+
+  @media (max-width: 576px) {
+    .radio {
+      margin-right: 10px; /* Less margin on phones */
+    }
+
+    .form-group label {
+      font-size: 0.9rem; /* Smaller labels on phones */
+    }
+  }
+
+</style>
+
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <strong><a class="navbar-brand" href="#">ExpenseTracker</a></strong>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav" id ="navbar">
+        <li class="nav-item active">
+          <strong><a class="nav-link" href="#" style="color: rgb(53, 154, 218);">Home <span class="sr-only">(current)</span></a></strong>
+        </li>
+
+        <li class="nav-item">
+          <strong><a class="nav-link" href="#" id="premium">Buy Premium</a></strong>
+        </li>
+
+        <li class="nav-item">
+          <strong><a class="nav-link" href="#" id="download" style="display: none;" onclick="downloadReports(event)">Download report⤵️</a></strong>
+        </li>
+
+        <li class="nav-item">
+          <strong><a class="nav-link" href="#" id="downloadList" style="display: none" onclick="downloadList()">List Of Downloads</a></strong>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="btn btn-outline-danger" onclick="logOut()">Logout</a>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+  
+
+  <div class="container mt-5">
+   <div class="row justify-content-center">
+    <div class="col-md-6">
+      <!-- <button type="button" id="premium" class="btn btn-success">Buy Premium</button>  -->
+      <div id="message"></div>
+     <form id="expForm" class="p-4 bg-light rounded">
+     
+      <h2 class="mb-4">Add Transactions</h2>
+
+      <div class="form-group">
+        <strong><label>Transaction Type:</label></strong><br>
+        <div>
+          <input type="radio" id="expense" name="transactionType" value="Expense" required>
+          <strong><label for="expense" style="color: rgb(232, 12, 56);" class="radio">EXPENSE</label></strong>
+        
+          <input type="radio" id="income" name="transactionType" value="Income" required>
+          <strong><label for="income" style="color: rgb(13, 170, 26);" class="radio">INCOME</label></strong>
+        </div>
+    
+      </div>
+
+       <div class="form-group">
+       <label for="amt">Choose amount:</label>
+      <input type="number" class="form-control" id="amt" required>
+    </div>
+   
+    <div class="form-group">
+      <label for="dec">Choose description:</label>
+      <input type="text" class="form-control" id="dec" required>
+    </div>
+
+    <div class="form-group">
+      <label for="choose">Choose category:</label>
+      <select class="form-control" id="choose" required>
+        <option value="Movie" class="categ">Movie</option>
+        <option value="Electricity" class="categ">Electricity</option>
+        <option value="Fuel" class="categ">Fuel</option>
+        <option value="Food" class="categ">Food</option>
+        <option value="Food" class="categ">Salary</option>
+        <option value="Food" class="categ">Rent</option>
+      </select>
+    </div>
+
+    <center><button type="submit" class="btn btn-dark" style="width: 40%;">Add</button></center>
+    <strong><h3><label for="choose" id="balance" style="visibility: hidden;" >Balance:</label></h3></strong>
+  </form>
+</div>
+  
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-7">
+      <h2 class="mb-4">Your Transactions</h2>  
+      <table class="table table-responsive table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Description</th>
+            <th scope="col">Category</th>
+            <th scope="col">Income</th>
+            <th scope="col">Expense</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody id="expTable">
+          <!-- Expenses will be added -->
+        </tbody>
+      </table>
+      <!-- Add this in the relevant section of your HTML file -->
+      <!-- <div id="pagination"></div>
+    </div> -->
+  </div>
+</div>
+
+<!-- <div id="paginationControls" class="mt-4"></div> -->
+
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+  <ul id="leaderboard" class="list-group"></ul>
+</div>
+</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/expenses.js"></script>
+<script src="/js/login.js"></script>
+</body>
+</html> 
+
+
